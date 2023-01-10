@@ -1,5 +1,6 @@
 import cv2
 from kabegami_system.load_img import load_img
+from kabegami_system.get_img_color import get_color
 
 # 壁紙の色を提案する
 def suggest(img_path):
@@ -25,6 +26,7 @@ def suggest(img_path):
         x, y, w, h = cv2.boundingRect(contour)
         # 切り取る領域を設定する
         region = img[y:y+h, x:x+w]
+        print(get_color(region))
         # 領域を切り取る
         cv2.imwrite("output/{}.png".format(i), region)
 
