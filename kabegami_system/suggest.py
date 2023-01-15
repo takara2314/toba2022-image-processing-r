@@ -1,9 +1,12 @@
+from statistics import mode
 import cv2
 from kabegami_system.load_img import load_img
 from kabegami_system.get_img_color import get_color
 
 # 壁紙の色を提案する
+# コードを貼るならこの部分
 def suggest(img_path):
+    # cv2.imread(img_path) と同様
     img = load_img(img_path)
 
     # グレースケールに変換
@@ -20,14 +23,18 @@ def suggest(img_path):
 
     # エッジが大きい順にソート
     contours = sorted(contours, key=cv2.contourArea, reverse=True)
+    colors = [None] * len(contours)
 
     for i, contour in enumerate(contours):
         # contourを囲む最小の矩形を取得する
         x, y, w, h = cv2.boundingRect(contour)
         # 切り取る領域を設定する
         region = img[y:y+h, x:x+w]
-        print(get_color(region))
+        colors[i] = get_color(region)
         # 領域を切り取る
         cv2.imwrite("output/{}.png".format(i), region)
+
+    # 一番多い要素を抽出
+    print(mode(colors))
 
     return "rgb(0, 0, 0)"
