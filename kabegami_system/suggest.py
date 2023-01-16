@@ -10,11 +10,14 @@ theme_color = {
         [15, 150],
         [20, 150],
         [25, 150],
-        [30, 150]
+        [30, 150],
+        [35, 150]
     ],
     "minimalist": [
-        [170, 150],
-        [180, 160]
+        [10, 100],
+        [15, 100],
+        [20, 100],
+        [25, 100]
     ],
     "cool": [
         [90, 150],
@@ -23,7 +26,8 @@ theme_color = {
         [105, 150],
         [110, 150],
         [115, 150],
-        [120, 150]
+        [120, 150],
+        [125, 150]
     ]
 }
 
@@ -95,19 +99,40 @@ def suggest(img_path, theme):
     print("Wallpaper detected.")
 
     # マスクした領域を指定したテーマの色に変換し、画像に反映させる
-    results = [None] * len(theme_color[theme])
+    if theme != "minimalist":
+        results = [None] * len(theme_color[theme])
 
-    for i, hsv in enumerate(theme_color[theme]):
-        print(f"{theme} theme: {i + 1} / {len(theme_color[theme])}")
+        for i, hsv in enumerate(theme_color[theme]):
+            print(f"{theme} theme: {i + 1} / {len(results)}")
 
-        retouched = original_hsv.copy()
-        for y, row in enumerate(masked):
-            for x, col in enumerate(row):
-                if col == 255:
-                    retouched[y][x][0:2] = hsv
-        results[i] = cv2.cvtColor(retouched, cv2.COLOR_HSV2BGR)
+            retouched = original_hsv.copy()
+            for y, row in enumerate(masked):
+                for x, col in enumerate(row):
+                    if col == 255:
+                        retouched[y][x][0:2] = hsv
+            results[i] = cv2.cvtColor(retouched, cv2.COLOR_HSV2BGR)
 
-        print("done.")
+            print("done.")
+
+    elif theme == "minimalist":
+        results = [None] * len(theme_color[theme]) * 2
+
+        for i in range(len(results)):
+            print(f"{theme} theme: {i + 1} / {len(results)}")
+
+            retouched = original_hsv.copy()
+            for y, row in enumerate(masked):
+                for x, col in enumerate(row):
+                    if col == 255:
+                        retouched[y][x][0:2] = theme_color[theme][i//2]
+                        value = retouched[y][x][2]
+                        adding = ((i % 2) + 1) * 20
+                        after = retouched[y][x][2] + adding
+                        retouched[y][x][2] = after if after <= 255 else 255
+
+            results[i] = cv2.cvtColor(retouched, cv2.COLOR_HSV2BGR)
+
+            print("done.")
 
     print("Finished processing.")
     return results
