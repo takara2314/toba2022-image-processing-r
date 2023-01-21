@@ -63,6 +63,8 @@ def suggest(img_path, theme):
 
     masked = cv2.inRange(img_hsv, hsv_min, hsv_max)
 
+    cv2.imwrite("masked1.png", masked)
+
     # マスクされなかったところを黒く塗りつぶす
     img_masked = img.copy()
     img_masked[masked == 0] = [0, 0, 0]
@@ -95,6 +97,8 @@ def suggest(img_path, theme):
     ])
 
     masked = cv2.inRange(img_hsv, hsv_min, hsv_max)
+
+    cv2.imwrite("masked2.png", masked)
 
     print("Wallpaper detected.")
 

@@ -2,13 +2,12 @@
 
 チームRの開発物のソースコードを管理します。
 
-プログラミング初心者／Python初学者が見ることを想定しているので、クラスや型アサーション等の機能は利用していません。
+プログラミング初心者／Python初学者が見ることを想定しているので、関数やクラス、型アサーション等の機能は利用していません。
 
 ## 最終課題として実装しようとしているアイデア
 
-部屋の写真を撮影すると、部屋に合った壁紙の色を提案してくれるシステムです。
-
-部屋の写真から、HSVフィルタリング処理を行って色を検出したり、輪郭抽出で家具の形状を取得するなどによって、壁紙の色を提案します。
+壁紙を検出し、壁紙の色を特定のテーマの色に変えて提示してくれるシステムです。
+部屋の雰囲気を変えたいときに、このシステムを使用します。
 
 ## 実行環境
 
@@ -18,21 +17,16 @@
 
 真正面から撮影した部屋の画像1枚（1920×1080 または 1280×720 / 3チャンネル）
 
-### 例
+### 入力例
 
-![Input example](./resources/input-example.png)
+Theme: minimalist
 
-[Image by wuttichai1983](https://www.freepik.com/free-photo/green-sofa-white-living-room-with-free-space_19703425.htm#query=living%20room&position=0&from_view=keyword)
-on Freepik
+![Input example](./resources/room.png)
 
 ## 出力
 
-壁紙の色（RGB）
-
-```
-提案されたの壁紙の色: rgb(226, 232, 240)
-```
+![Output example](./result_1.png)
 
 ## フローチャート
 
-Coming soon
+![flowchart](./resources/flowchart.webp)
